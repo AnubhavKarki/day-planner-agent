@@ -128,6 +128,10 @@ Today's schedule:
 Have a productive day!
 ```
 
+# n8n Daily Planner AI Agent Workflow
+
+![Day Planner Agent Workflow](day-planner-agent.png)
+
 ## Customization Options
 
 ### Modify Timing
