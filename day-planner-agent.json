@@ -1,0 +1,256 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "options": {
+                    "systemMessage": "=**Role:** You are a helpful and organized AI assistant.  \nToday is {{ $now.format('dddd, MMMM D, YYYY') }} and the current time is {{ $now.format('h:mm A') }}.\n\n**Task:** At 7 AM every day, your job is to check my Google Calendar and send a summary of today’s schedule to me via both Telegram and Gmail.\n\n**Input:**  \n- A list of calendar events scheduled for today, including the title, start time, and location (if available).  \n- The current date and time.\n\n**Tools:**  \n- Google Calendar  \n- Gmail and Telegram for messaging  \n- OpenWeatherMap and SerpAPI (optional, for weather or news)\n\n**Constraints:**  \n- Start with a friendly sentence that includes today’s date and time  \n- List events in bullet format, showing time, title, and location  \n- If no events are scheduled, say I have a free day  \n- End with a warm closing like “Have a productive day!” or “Don’t forget to take breaks!”\n\nKeep the message short, clear, and mobile-friendly."
+                }
+            },
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 3.1,
+            "position": [
+                -216,
+                -48
+            ],
+            "id": "53ca3482-3e68-4f72-96f0-739c118299c0",
+            "name": "Day-Planner-AI-Agent"
+        },
+        {
+            "parameters": {
+                "model": {
+                    "__rl": true,
+                    "value": "gpt-5-nano-2025-08-07",
+                    "mode": "list",
+                    "cachedResultName": "gpt-5-nano-2025-08-07"
+                },
+                "builtInTools": {},
+                "options": {}
+            },
+            "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+            "typeVersion": 1.3,
+            "position": [
+                -464,
+                176
+            ],
+            "id": "0a4f2531-4726-4eff-8e8d-8b796a096c9c",
+            "name": "OpenAI Chat Model",
+            "credentials": {
+                "openAiApi": {
+                    "id": "WXPqvZyGBv4jUJbd",
+                    "name": "OpenAi account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "contextWindowLength": 7
+            },
+            "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+            "typeVersion": 1.3,
+            "position": [
+                -304,
+                176
+            ],
+            "id": "399a1491-05b6-4abd-851f-07279868068a",
+            "name": "Simple Memory"
+        },
+        {
+            "parameters": {
+                "calendar": {
+                    "__rl": true,
+                    "value": "c9cf6f62845e01edab925ef1edac574c9e02de93a99f57a9b2579d9ac8242cd1@group.calendar.google.com",
+                    "mode": "list",
+                    "cachedResultName": "AI Agent Day Planner"
+                },
+                "additionalFields": {}
+            },
+            "type": "n8n-nodes-base.googleCalendarTool",
+            "typeVersion": 1.3,
+            "position": [
+                -96,
+                176
+            ],
+            "id": "cdbeb54d-78a7-4551-b5d5-7323d3b6fa87",
+            "name": "Fetch Calendar's Events",
+            "credentials": {
+                "googleCalendarOAuth2Api": {
+                    "id": "mr9xuuxLeADxOuKZ",
+                    "name": "Google Calendar account 2"
+                }
+            }
+        },
+        {
+            "parameters": {},
+            "type": "n8n-nodes-base.openWeatherMapTool",
+            "typeVersion": 1,
+            "position": [
+                64,
+                176
+            ],
+            "id": "77141d7e-bd6b-439e-ab3e-912450137da7",
+            "name": "OpenWeatherMap",
+            "disabled": true
+        },
+        {
+            "parameters": {
+                "options": {}
+            },
+            "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+            "typeVersion": 1,
+            "position": [
+                224,
+                176
+            ],
+            "id": "1502b5e7-b951-48a8-9541-6cac0608ae0a",
+            "name": "Search Info Google",
+            "credentials": {
+                "serpApi": {
+                    "id": "3MHm5MXnbb2wgAQJ",
+                    "name": "SerpAPI account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "options": {}
+            },
+            "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+            "typeVersion": 1.4,
+            "position": [
+                -448,
+                -48
+            ],
+            "id": "2469e52e-fe87-44c3-b080-533cd9364e84",
+            "name": "Daily 7 AM Trigger",
+            "webhookId": "a14b177c-6203-432b-ab69-afa11e2ecf52"
+        },
+        {
+            "parameters": {
+                "sendTo": "davidak115@gmail.com",
+                "subject": "From n8n Automation - DO NOT REPLY!",
+                "emailType": "text",
+                "message": "G'day",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.gmailTool",
+            "typeVersion": 2.2,
+            "position": [
+                384,
+                176
+            ],
+            "id": "8aff4655-e65e-448c-8cb5-a00e65f612b2",
+            "name": "Send a message in Gmail",
+            "webhookId": "520987a6-0d5c-49c1-ae18-5091986eee14",
+            "credentials": {
+                "gmailOAuth2": {
+                    "id": "pcK9vJCS2fcKVKUe",
+                    "name": "Gmail account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "content": "## Replace the Chat trigger with a Schedule Trigger to enable a Time-based trigger.\n\n### NOTE: Chat trigger is done for test only.\n",
+                "height": 224,
+                "width": 336
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+                -720,
+                -304
+            ],
+            "id": "f0e324c2-563a-4a14-9383-de06f5ad8559",
+            "name": "Sticky Note"
+        }
+    ],
+    "connections": {
+        "Day-Planner-AI-Agent": {
+            "main": [
+                []
+            ]
+        },
+        "OpenAI Chat Model": {
+            "ai_languageModel": [
+                [
+                    {
+                        "node": "Day-Planner-AI-Agent",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Simple Memory": {
+            "ai_memory": [
+                [
+                    {
+                        "node": "Day-Planner-AI-Agent",
+                        "type": "ai_memory",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Fetch Calendar's Events": {
+            "ai_tool": [
+                [
+                    {
+                        "node": "Day-Planner-AI-Agent",
+                        "type": "ai_tool",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "OpenWeatherMap": {
+            "ai_tool": [
+                [
+                    {
+                        "node": "Day-Planner-AI-Agent",
+                        "type": "ai_tool",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Search Info Google": {
+            "ai_tool": [
+                [
+                    {
+                        "node": "Day-Planner-AI-Agent",
+                        "type": "ai_tool",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Daily 7 AM Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "Day-Planner-AI-Agent",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Send a message in Gmail": {
+            "ai_tool": [
+                [
+                    {
+                        "node": "Day-Planner-AI-Agent",
+                        "type": "ai_tool",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "pinData": {},
+    "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "6e5f9219007b48232e2e4a4e27f375603e9f208a15cfddac41f5e86ef0ee141f"
+    }
+}
