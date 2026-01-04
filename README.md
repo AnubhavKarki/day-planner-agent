@@ -87,15 +87,15 @@ Context: Last 7 messages (conversation continuity)
 
 2. **Credentials Setup**
    ```
-   OpenAI: "OpenAi account" (WXPqvZyGBv4jUJbd)
-   Google Calendar: "Google Calendar account 2" (mr9xuuxLeADxOuKZ) 
-   Gmail: "Gmail account" (pcK9vJCS2fcKVKUe)
-   SerpAPI: "SerpAPI account" (3MHm5MXnbb2wgAQJ)
+   OpenAI: "OpenAi account" 
+   Google Calendar: "Google Calendar account 2"
+   Gmail: "Gmail account"
+   SerpAPI: "SerpAPI account"
    ```
 
 3. **Calendar Configuration**
    ```
-   Calendar ID: c9cf6f62845e01edab925ef1edac574c9e02de93a99f57a9b2579d9ac8242cd1@group.calendar.google.com
+   Calendar ID: ****************@group.calendar.google.com
    Name: "AI Agent Day Planner"
    ```
 
