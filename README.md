@@ -65,7 +65,7 @@ Context: Last 7 messages (conversation continuity)
 | Tool | Purpose | Status |
 |------|---------|--------|
 | **Fetch Calendar's Events** | Gets today's events from "AI Agent Day Planner" calendar | Active |
-| **Send a message in Gmail** | Sends formatted summary to `davidak115@gmail.com` | Active |
+| **Send a message in Gmail** | Sends formatted summary to `**********@gmail.com` | Active |
 | **Search Info Google** (SerpAPI) | Optional news/search context | Active |
 | **OpenWeatherMap** | Weather integration | Disabled |
 
